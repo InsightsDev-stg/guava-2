@@ -1,46 +1,60 @@
-{
-  "addons": {
-    "apt": {
-      "packages": [
-        "oracle-java8-installer"
-      ]
-    }
-  },
-  "after_success": [
-    " wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.7.201606060606/jacoco-0.7.7.201606060606.zip ",
-    " unzip -o jacoco-0.7.7.201606060606.zip  ",
-    " cd lib  ",
-    " mv * ../  ",
-    " cd ..  ",
-    " chmod a+x *  ",
-    " cd $PWD  ",
-    " rm  'jacoco.exec'",
-    " export JAVA_TOOL_OPTIONS=-javaagent:$PWD/jacocoagent.jar=destfile=$PWD/jacoco.exec,append=true  ",
-    " travis_wait 720 mvn  test -Dmaven.test.failure.ignore=true -Djacoco.skip=true -Dcobertura.skip=true -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true -Drat.ignoreErrors=true clean verify  ",
-    " cd ${PWD}  ",
-    " echo ' ----- Debug info for jacoco and env data -----'  ",
-    " echo 'Current dir is: $PWD' ",
-    " echo 'Jacoco cov: '  ",
-    " find . -name '*.exec'  ",
-    " echo ' ----------------------------------------------' ",
-    "./df-build.sh"
-  ],
-  "before_install": [],
-  "cache": {
-    "directories": [
-      "$HOME/.m2",
-      "$HOME/.m2"
-    ]
-  },
-  "install": "mvn -B install -U -DskipTests=true",
-  "jdk": "oraclejdk8",
-  "language": "java",
-  "script": [
-    "travis_wait 360 mvn -B verify -U -Dmaven.javadoc.skip=true -Dgwt.test.include=**/DoesNotMatchAnyTests.java"
-  ],
-  "sudo": false,
-  "global_env": "IPvqFwnLx/GXyImJuwM2MIvzDlBLqEXaQXFGJgAP1nbuenaLAloOOlqQ+iy2FDLBD/j+zjSbR3WWF9DIT4YxAS03Z6iMwxh7GCfk+tyhVtLQnwt7w1rquyhbrrGFsY5U0hr5q80Ww6J+zfp2yZ8aP9FHSy5ahNjqys4FtubOWLk=[secure] G77Wt2h2fceQ867i1uwOjUygrNeBpLRS8sxgfUZsO66dvlrx1wYFpZLLRIiPcy01peUTE2SvXIXLHKe9v3AlMonPibsQtvvfQSVfx+jgKwLZx9cuf/M5VQlD3etRUh4K/rBezlxWRroeeKcM2DQqiEVLsTDSyNZV9kVAjwfLTvM=[secure] wieIClPLTXS3QjDzqyp0TqIrVP/Q6iWNPOtcUQYfdDZJGwufE61laTFtzVKXZRb7uJ4GXDObcVU3AcpAwkTX/5sEksBxgv3TZ5Qi0mVx2GRmbE06ULLxi7sPnTCZ/VFtselDWcWArWGAcdCjW9gcCrgj5K/+sYpVKz9a8V+SDM4=[secure]",
-  "group": "stable",
-  "dist": "precise",
-  "os": "linux"
-}
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
+  artifacts:
+    debug: true
+    paths:
+    - libs.zip
+    - build.zip
+    - testbuild.zip
+    - jacoco.exec
+    target_paths: bb687fb0-1893-4571-b7f2-0808fd04a60c
+after_success:
+- ' wget --content-disposition http://search.maven.org/remotecontent?filepath=org/jacoco/jacoco/0.7.7.201606060606/jacoco-0.7.7.201606060606.zip '
+- ' unzip -o jacoco-0.7.7.201606060606.zip  '
+- ' cd lib  '
+- ' mv * ../  '
+- ' cd ..  '
+- ' chmod a+x *  '
+- ' cd $PWD  '
+- ' rm  ''jacoco.exec'''
+- ' export JAVA_TOOL_OPTIONS=-javaagent:$PWD/jacocoagent.jar=destfile=$PWD/jacoco.exec,append=true  '
+- ' travis_wait 720 mvn  test -Dmaven.test.failure.ignore=true -Djacoco.skip=true
+  -Dcobertura.skip=true -Dmaven.clover.skip=true -Dmaven.javadoc.skip=true -Drat.skip=true
+  -Drat.ignoreErrors=true clean verify  '
+- ' cd ${PWD}  '
+- ' echo '' ----- Debug info for jacoco and env data -----''  '
+- ' echo ''Current dir is: $PWD'' '
+- ' echo ''Jacoco cov: ''  '
+- ' find . -name ''*.exec''  '
+- ' echo '' ----------------------------------------------'' '
+- ./df-build.sh
+before_install: []
+branches: ''
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.m2
+  - $HOME/.m2
+dist: precise
+global_env: IPvqFwnLx/GXyImJuwM2MIvzDlBLqEXaQXFGJgAP1nbuenaLAloOOlqQ+iy2FDLBD/j+zjSbR3WWF9DIT4YxAS03Z6iMwxh7GCfk+tyhVtLQnwt7w1rquyhbrrGFsY5U0hr5q80Ww6J+zfp2yZ8aP9FHSy5ahNjqys4FtubOWLk=[secure]
+  G77Wt2h2fceQ867i1uwOjUygrNeBpLRS8sxgfUZsO66dvlrx1wYFpZLLRIiPcy01peUTE2SvXIXLHKe9v3AlMonPibsQtvvfQSVfx+jgKwLZx9cuf/M5VQlD3etRUh4K/rBezlxWRroeeKcM2DQqiEVLsTDSyNZV9kVAjwfLTvM=[secure]
+  wieIClPLTXS3QjDzqyp0TqIrVP/Q6iWNPOtcUQYfdDZJGwufE61laTFtzVKXZRb7uJ4GXDObcVU3AcpAwkTX/5sEksBxgv3TZ5Qi0mVx2GRmbE06ULLxi7sPnTCZ/VFtselDWcWArWGAcdCjW9gcCrgj5K/+sYpVKz9a8V+SDM4=[secure]
+group: stable
+install: mvn -B install -U -DskipTests=true
+jdk:
+- oraclejdk8
+language: java
+notifications:
+  webhooks:
+    on_failure: always
+    on_start: always
+    on_success: always
+    urls:
+    - http://insights-portal-insights-service-webserver-stg.public-swarm.devfactory.com/travisWebHookListener?build_id=bb687fb0-1893-4571-b7f2-0808fd04a60c
+os: linux
+script:
+- travis_wait 360 mvn -B verify -U -Dmaven.javadoc.skip=true -Dgwt.test.include=**/DoesNotMatchAnyTests.java
+sudo: false
+# Modified by Insights Service at 2016-11-16 13:11:37.137855
